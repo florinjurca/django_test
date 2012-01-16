@@ -41,11 +41,12 @@ def edit(request,id,save=None):
         -redirect the output to index page
     '''
     
-    id = int(id)
-    user = None
+    id = abs(int(id))
     if save==None:
         if id>0:
             user = get_object_or_404(TestUsersAuth,pk=id)
+        else:
+            user = TestUsersAuth(id=0)
         #By default render_to_response uses Context TEMPLATE_CONTEXT_PROCESSORS
         response = render_to_response('admin/user_edit.html',{'user':user},
             context_instance=RequestContext(request)
