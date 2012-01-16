@@ -1,0 +1,37 @@
+<!-- Content for overlay -->
+<form id="user_edit_form">
+{% csrf_token %}
+<input type="hidden" name="id" value="{{user.id}}" />
+<table id="user">
+    <tbody>
+        <tr>
+            <td>
+                <div class="label-user">Username</div>
+                <input type="text" name="username" value="{{user.username|default:''}}">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="label-user">Password</div>
+                <input type="text" name="password" value="{{user.password|default:''}}">
+                <input type="text" value="{{user.password|default:''}}">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="label-user">E-mail</div>
+                <input type="text" name="email" value="{{user.email|default:''}}">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="label-user">Name(first+last)</div>
+                <input type="text" name="first_name" value="{{user.first_name|default:''}}" /> 
+                <input type="text" name="last_name" value="{{user.last_name|default:''}}" />
+            </td>
+        </tr>
+    </tbody>
+</table>
+</form>
+<button onclick="user_edit_save({{user.id}})">SAVE</button> | <button onclick="user_edit_cancel()">CANCEL</button>
+<div class='error'>{{user.error}}</div>
