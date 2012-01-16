@@ -40,6 +40,7 @@ def edit(request,id,save=None):
             -the form will be filled and id>0
         -redirect the output to index page
     '''
+    #print 'save="%s"' % 'None' if save==None else save
     
     id = abs(int(id))
     if save==None:
@@ -59,7 +60,6 @@ def edit(request,id,save=None):
             user = TestUsersAuth.objects.get(pk=id)
             user_form = TestUsersAuthForm(request.POST, instance=user)
         
-        
         try:
             #Validation happens on save
             user_form.save()
@@ -73,6 +73,8 @@ def edit(request,id,save=None):
             #RequestContext always use django.core.context_processors.csrf 
             #render_to_response can be forced to use RequestContext context
             user.error = e
+            if user.error:
+                user.id=0
             response = render_to_response('admin/user_edit.html',{'user':user},
                 context_instance=RequestContext(request)
                 #,[] #here we can add context processors functions (even our custom)

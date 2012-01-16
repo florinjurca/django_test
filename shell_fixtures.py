@@ -15,49 +15,15 @@ except:
     pass
 
 try:
-    user = TestUsersAuth(
-        username='florinjurca',
-        password='',
-        email='florinjurca@gmail.com',
-        first_name='Florin',
-        last_name='Jurca'
-    )
-    user.save()
+    for i in range(1,101):
+        user = TestUsersAuth(
+            username='johnsmith_%d' % (i,),
+            password='123456',
+            email='johnsmith%d@gmail.com' % (i,),
+            first_name='John_%d' % (i,),
+            last_name='Smith_%d' % (i,)
+        )
+        user.save()
 except:
     pass
-
-try:
-    user = TestUsersAuth(
-        username='jijiz',
-        password='123456',
-        email='jijizumba@yahoo.com',
-        first_name='Jiji',
-        last_name='Zumba'
-    )
-    user.save()
-except:
-    pass
-
-try:
-    user = TestUsersAuth(
-        username='ionz',
-        password='123456',
-        email='ionzabrea@yahoo.com',
-        first_name='Ion',
-        last_name='Zabrea'
-    )
-    user.save()
-except:
-    pass
-
-try:
-    user = TestUsersAuth(
-        username='mischie',
-        password='123456',
-        email='valentinmischie@gmail.com',
-        first_name='Valentin',
-        last_name='Mischie'
-    )
-    user.save()
-except:
-    pass
+    

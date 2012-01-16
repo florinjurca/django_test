@@ -49,7 +49,7 @@ class TestUsersAuth(models.Model):
             salt = get_hexdigest(algo, str(random.random()), str(random.random()))[:5]
             hsh = get_hexdigest(algo, salt, raw_password)
             self.password = '%s$%s$%s' % (algo, salt, hsh)
-
+    
 
 class TestUsersAuthForm(ModelForm):
     class Meta:
@@ -81,7 +81,7 @@ class TestUsersManager(models.Manager):
         user.save(using=self._db)
         
     
-    def edit_user(self,email,password,first_name='',last_name=''):
+    def update_user(self,email,password,first_name='',last_name=''):
         '''
         Change the user profile
         '''

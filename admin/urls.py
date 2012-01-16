@@ -6,5 +6,5 @@ urlpatterns = patterns('admin.views',
     url(r'^$', 'index'),
     url(r'^(?P<id>\d+)/$', 'index'),
     url(r'^edit/(?P<id>\d+)/$', 'edit'),
-    url(r'^edit/(?P<id>\d+)/save/$', 'edit'),
+    url(r'^edit/(?P<id>\d+)/(?P<save>save)/$', 'edit'),
 )
