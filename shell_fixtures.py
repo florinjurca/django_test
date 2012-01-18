@@ -15,7 +15,7 @@ except:
     pass
 
 try:
-    for i in range(1,101):
+    for i in range(1,8):
         user = TestUsersAuth(
             username='johnsmith_%d' % (i,),
             password='123456',
