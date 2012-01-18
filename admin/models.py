@@ -3,6 +3,7 @@ from django.db import models
 from django.utils.encoding import smart_str
 from django.utils.hashcompat import md5_constructor, sha_constructor
 from django.forms import ModelForm
+from django import forms
 
 # Create your models here.
 
@@ -33,10 +34,10 @@ class TestUsersAuth(models.Model):
     '''
     id = models.AutoField(primary_key=True, editable=False)
     username = models.CharField('Username', max_length=30, unique=True)
-    password = models.CharField('Password', max_length=128)
+    password = models.CharField('Password', max_length=16)
     first_name = models.CharField('First name', max_length=30, blank=True)
     last_name = models.CharField('Last name', max_length=30, blank=True)
-    email = models.EmailField('E-mail address', blank=True)
+    email = models.EmailField('E-mail address', max_length=60)
     is_admin = models.BooleanField('is admin', default=False)
     cr_date = models.DateTimeField('creation date', default=datetime.datetime.now, editable=False)
     
@@ -52,6 +53,7 @@ class TestUsersAuth(models.Model):
     
 
 class TestUsersAuthForm(ModelForm):
+    password_match=forms.CharField(max_length=16)
     class Meta:
         model = TestUsersAuth
             

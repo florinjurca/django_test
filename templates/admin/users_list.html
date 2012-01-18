@@ -7,16 +7,6 @@ body {
     font-weight:normal;
 }
 
-#add-new-user {
-    font-size: 1;
-    font-weight:bold;
-    margin:0;
-    padding-left:20px;
-    padding-right:20px;
-    padding-top:5px;
-    padding-bottom:5px;
-}
-
 .label {
     font-size: 1.3em;
     margin:0;
@@ -47,7 +37,12 @@ a {
     z-index:1000;
 }
 
-#user {
+#user_edit_form, table.user-form, input {
+    width:310px;
+}
+
+.user-label {
+    width:100%;
 }
 
 .error {
@@ -87,12 +82,8 @@ a {
     user_edit_save = function(uid) 
     {
         params = $('#user_edit_form').serializeArray();
-        $.post('/admin/edit/'+uid+'/save/',params,function(data){
-            /*Errors can be encoded like in the following lines: 
-                <a class="error">Error: please ...</a> 
-                <span class="error">Error: please ...</span>
-                <div class="error">Error: please ...</div>
-            */    
+        $.post('/admin/edit/'+uid+'/save/',params).complete(function(data){
+            data = data.responseText;
             if (data.indexOf('Saved==True')>=0) {
                 location.href='/admin/';
             } else {
@@ -106,16 +97,16 @@ a {
 </head>
 <body><center>
     <div style="width:600px;text-align:left">
-    <button id="add-user" onclick="user_edit(0)">ADD USER</button>
+    <button id="add-new-user" onclick="user_edit(0)">ADD USER</button>
 	<table id="users-list" style="border: 1px solid black;width:600px">
     <tbody>
 	{% for user in users_list %}
         <tr>
             <td style="width:30%;text-wrap:none">
-                <span class="label-user" >{{user.username}}</span>
+                <span class="user-label" >{{user.username}}</span>
             </td>
             <td>
-                <span class="label-user" >{{user.email}}</span>
+                <span class="user-label" >{{user.email}}</span>
             </td>
             <td style="width:120px;text-wrap:none"> 
                 <a onclick="user_edit({{user.id}})" href="javascript:void(0)">EDIT</a> | 

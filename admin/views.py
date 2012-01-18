@@ -42,47 +42,50 @@ def edit(request,id,save=None):
     '''
     #print 'save="%s"' % 'None' if save==None else save
     
+    
     id = abs(int(id))
     if save==None:
         if id>0:
-            user = get_object_or_404(TestUsersAuth,pk=id)
+            #user = get_object_or_404(TestUsersAuth,pk=id)
+            user = TestUsersAuth.objects.get(pk=id)
         else:
             user = TestUsersAuth(id=0)
+            
+        user_form = TestUsersAuthForm(instance=user)
+        
         #By default render_to_response uses Context TEMPLATE_CONTEXT_PROCESSORS
-        response = render_to_response('admin/user_edit.html',{'user':user},
+        response = render_to_response('admin/user_edit.html',{
+            'user_form':user_form,
+            'user':user                 #only for the id hidden field
+            },
             context_instance=RequestContext(request)
         )
     elif save == 'save':
         if id == 0:
             user = TestUsersAuth()
             user_form = TestUsersAuthForm(request.POST, instance=user)
+            user.id=id
         elif id > 0:
             user = TestUsersAuth.objects.get(pk=id)
             user_form = TestUsersAuthForm(request.POST, instance=user)
         
-        try:
-            #Validation happens on save
+        
+        if user_form.is_valid():
+            #a global Validation happens on save
             user_form.save()
             
             #if all savings are ok we will send a simple ajax response to tell the client
             #that main page can be reloaded (by the client) to refresh the users_list
             response = HttpResponse('Saved==True', mimetype="text/plain")
-        except Exception,e:
-            #TEMPLATE_CONTEXT_PROCESSORS are simple functions that automatically add to templates
-            #specific parameters (for ex. rel. to security) like: csrf_token
-            #RequestContext always use django.core.context_processors.csrf 
-            #render_to_response can be forced to use RequestContext context
-            user.error = e
-            if user.error:
-                user.id=0
-            response = render_to_response('admin/user_edit.html',{'user':user},
+            
+        else:
+            response = render_to_response('admin/user_edit.html',{
+                'user_form':user_form,
+                'user':user             #only for id hidden field
+                },
                 context_instance=RequestContext(request)
                 #,[] #here we can add context processors functions (even our custom)
             )
-            '''
-            #only for test
-            response = HttpResponse(e)
-            '''
             
     else:
         raise Http404
@@ -90,4 +93,17 @@ def edit(request,id,save=None):
     #this is a response to an ajax request
     return response
     
+'''
+                <div class='error'>{{user_form.errors['username']}}</div>
+                <div class='error'>{{user_form.errors['password']}}</div>
+                <div class='error'>{{user_form.errors['email']}}</div>
+                <div class='error'>{{user_form.errors['first_name']}}</div><br/>
+                <div class='error'>{{user_form.errors['last_name']}}</div><br/>                
+                
+                <div class='error'>{{user_form.username.errors}}</div>
+                <div class='error'>{{user_form.password.errors}}</div>
+                <div class='error'>{{user_form.email.errors}}</div>
+                <div class='error'>{{user_form.first_name.errors}}</div><br/>
+                <div class='error'>{{user_form.last_name.errors}}</div><br/>
 
+'''

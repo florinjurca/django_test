@@ -2,36 +2,51 @@
 <form id="user_edit_form">
 {% csrf_token %}
 <input type="hidden" name="id" value="{{user.id}}" />
-<table id="user">
+<table class="user-edit-form">
     <tbody>
         <tr>
             <td>
-                <div class="label-user">Username</div>
-                <input type="text" name="username" value="{{user.username|default:''}}">
+                <div class="user-label">{{user_form.username.label}}</div>
+                {{user_form.username|default:''}}<br/>
+                {% for error in user_form.username.errors %}
+                <div class='error'>{{error}}</div>
+                {% endfor %}
             </td>
         </tr>
         <tr>
             <td>
-                <div class="label-user">Password</div>
-                <input type="text" name="password" value="{{user.password|default:''}}">
-                <input type="text" name="password_match" value="{{user.password|default:''}}">
+                <div class="user-label">{{user_form.password.label}}</div>
+                {{user_form.password|default:''}}<br />
+                {{user_form.password_match|default:''}}
+                {% for error in user_form.password.errors %}
+                <div class='error'>{{error}}</div>
+                {% endfor %}
             </td>
         </tr>
         <tr>
             <td>
-                <div class="label-user">E-mail</div>
-                <input type="text" name="email" value="{{user.email|default:''}}">
+                <div class="user-label">{{user_form.email.label}}</div>
+                {{user_form.email|default:''}}
+                {% for error in user_form.email.errors %}
+                <div class='error'>{{error}}</div>
+                {% endfor %}
             </td>
         </tr>
         <tr>
             <td>
-                <div class="label-user">Name(first+last)</div>
-                <input type="text" name="first_name" value="{{user.first_name|default:''}}" /> 
-                <input type="text" name="last_name" value="{{user.last_name|default:''}}" />
+                <div class="user-label">Name({{user_form.first_name.label}}+{{user_form.last_name.label}})</div>
+                {{user_form.first_name|default:''}}<br/> 
+                {% for error in user_form.first_name.errors %}
+                <div class='error'>{{error}}</div>
+                {% endfor %}
+                
+                {{user_form.last_name|default:''}}<br/>
+                {% for error in user_form.last_name.errors %}
+                <div class='error'>{{error}}</div>
+                {% endfor %}
             </td>
         </tr>
     </tbody>
 </table>
 </form>
 <button onclick="user_edit_save({{user.id}})">SAVE</button> | <button onclick="user_edit_cancel()">CANCEL</button>
-<div class='error'>{{user.error}}</div>
