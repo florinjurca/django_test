@@ -82,11 +82,13 @@ a {
     user_edit_save = function(uid) 
     {
         params = $('#user_edit_form').serializeArray();
-        $.post('/admin/edit/'+uid+'/save/',params).complete(function(data){
-            data = data.responseText;
+        $.post('/admin/edit/'+uid+'/save/',params).complete(function(dat){
+            data = dat.responseText;
             if (data.indexOf('Saved==True')>=0) {
                 location.href='/admin/';
-            } else {
+            }
+            else 
+            {
                 $('#user-edit').html(data);
                 if($('#user-edit').display == 'none') $('#user-edit').show();
             }
@@ -101,14 +103,14 @@ a {
 	<table id="users-list" style="border: 1px solid black;width:600px">
     <tbody>
 	{% for user in users_list %}
-        <tr>
-            <td style="width:30%;text-wrap:none">
+        <tr id="user_{{user.id}}">
+            <td style="width:30%">
                 <span class="user-label" >{{user.username}}</span>
             </td>
             <td>
                 <span class="user-label" >{{user.email}}</span>
             </td>
-            <td style="width:120px;text-wrap:none"> 
+            <td style="width:120px"> 
                 <a onclick="user_edit({{user.id}})" href="javascript:void(0)">EDIT</a> | 
                 <a onclick="user_delete({{user.id}},'{{user.username}}')" href="javascript:void(0)">DELETE</a>
             </td>

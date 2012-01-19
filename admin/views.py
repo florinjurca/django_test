@@ -23,13 +23,13 @@ def index(request,id=None):
         user.delete()
         return HttpResponseRedirect('/admin/')
         
-    users_list = TestUsersAuth.objects.all() #.order_by('cr_date')
+    users_list = TestUsersAuth.objects.all().order_by('username')
     
     #By default render_to_response uses Context TEMPLATE_CONTEXT_PROCESSORS
     return render_to_response('admin/users_list.html',{'users_list':users_list})
     
 
-#@csrf_protect
+
 def edit(request,id,save=None):
     '''
     The view of user-edit popup 
@@ -63,12 +63,11 @@ def edit(request,id,save=None):
     elif save == 'save':
         if id == 0:
             user = TestUsersAuth()
-            user_form = TestUsersAuthForm(request.POST, instance=user)
             user.id=id
         elif id > 0:
             user = TestUsersAuth.objects.get(pk=id)
-            user_form = TestUsersAuthForm(request.POST, instance=user)
         
+        user_form = TestUsersAuthForm(request.POST, instance=user)
         
         if user_form.is_valid():
             #a global Validation happens on save
@@ -93,17 +92,4 @@ def edit(request,id,save=None):
     #this is a response to an ajax request
     return response
     
-'''
-                <div class='error'>{{user_form.errors['username']}}</div>
-                <div class='error'>{{user_form.errors['password']}}</div>
-                <div class='error'>{{user_form.errors['email']}}</div>
-                <div class='error'>{{user_form.errors['first_name']}}</div><br/>
-                <div class='error'>{{user_form.errors['last_name']}}</div><br/>                
-                
-                <div class='error'>{{user_form.username.errors}}</div>
-                <div class='error'>{{user_form.password.errors}}</div>
-                <div class='error'>{{user_form.email.errors}}</div>
-                <div class='error'>{{user_form.first_name.errors}}</div><br/>
-                <div class='error'>{{user_form.last_name.errors}}</div><br/>
 
-'''
