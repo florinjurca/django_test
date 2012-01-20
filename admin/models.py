@@ -53,12 +53,23 @@ class TestUsersAuth(models.Model):
     
 
 class TestUsersAuthForm(ModelForm):
-    password_match=forms.CharField(label='Password again',min_length=6,max_length=16)
+    password_match=forms.CharField(
+        label='Password again',
+        min_length=6,
+        max_length=16,
+        widget=forms.PasswordInput()
+    )
+    
     class Meta:
         model = TestUsersAuth()
         
         #fields used only for changing fields order in form
         #fields = ['username','password','password_match','email','first_name','last_name']
+        
+        widgets = {
+            'password': forms.PasswordInput()
+        }
+        
     
     def clean(self):
         super(TestUsersAuthForm, self).clean()
@@ -72,7 +83,7 @@ class TestUsersAuthForm(ModelForm):
         #print password_value,'=',password_match_value
         
         if password_value != password_match_value:
-            raise forms.ValidationError("Passwords don't match")
+            raise forms.ValidationError("Passwords didn't match each other!")
             #raise ValidationError(_("Passwords don't match")) #i18n
         return cleaned_data
     

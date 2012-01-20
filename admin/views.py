@@ -48,8 +48,10 @@ def edit(request,id,save=None):
         if id>0:
             #user = get_object_or_404(TestUsersAuth,pk=id)
             user = TestUsersAuth.objects.get(pk=id)
+            #user.password=''
         else:
             user = TestUsersAuth(id=0)
+            #we don't want the password to be displayed in form
             
         user_form = TestUsersAuthForm(instance=user)
         
