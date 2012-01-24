@@ -1,0 +1,144 @@
+<html>
+<head>
+<style type="text/css">
+
+body {
+    font-size: 14px;
+    font-weight:normal;
+}
+
+.label {
+    font-size: 1.3em;
+    margin:0;
+}
+
+a {
+    text-decoration:none;
+    font-weight:bold;
+    font-size: 1em;
+}
+
+.overlay {
+    position:fixed;
+    top:200px;
+    left:459px;
+    border:1px solid black;
+    text-align:center;
+    display:none;
+    width:320px;
+    /*height:300px;*/
+    font-size: 1em;
+    font-weight:bold;
+    padding-left:20px;
+    padding-right:20px;
+    padding-top:5px;
+    padding-bottom:5px;
+    background-color:yellow;
+    z-index:1000;
+}
+
+#user_edit_form, table.user-form, input {
+    width:310px;
+}
+
+.user-label {
+    width:100%;
+}
+
+.error {
+    font-size: 12px;
+    color:red;
+    font-weight:bold;
+    font-family:arial,verdana;
+}
+
+</style>
+{% load static %}
+<script type="text/javascript" src="{% get_static_prefix %}js/jquery-1.6.2.min.js"></script>
+<script type="text/javascript">
+    user_edit = function(uid)
+    {
+        $.get('/exadmin/edit/'+uid+'/',function(data){
+            $('#user-edit').html(data);
+            $('#user-edit').show()
+        });
+    };
+
+    user_delete = function(uid,username) 
+    {
+        if ($('#user-edit').display != 'none'){
+            $('#user-edit').hide();
+        }
+        if (!confirm('Delete user:"'+username+'"')) return;
+        location.href='/exadmin/'+uid+'/';
+    };
+    
+    user_edit_cancel = function() 
+    {
+        $('#user_edit_form :text').val('');
+        $('#user-edit').hide();
+    };
+    
+    user_edit_save = function(uid) 
+    {
+        params = $('#user_edit_form').serializeArray();
+        $.post('/exadmin/edit/'+uid+'/save/',params).complete(function(dat){
+            data = dat.responseText;
+            if (data.indexOf('Saved==True')>=0) {
+                location.href='/exadmin/';
+                //alert('Saved==True');
+            }
+            else 
+            {
+                $('#user-edit').html(data);
+                if($('#user-edit').display == 'none') $('#user-edit').show();
+            }
+        })
+    };
+
+</script>
+</head>
+<body><center>
+    <div style="width:800px;text-align:left">
+    <button id="add-new-user" onclick="user_edit(0)">ADD USER</button>
+	<table id="users-list" style="border: 1px solid black;width:100%">
+    <tbody>
+        <tr>
+            <th>Id</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Admin</th>
+        </tr>
+	{% for user in users_list %}
+        <tr id="user_{{ user.id }}">
+            <td style="width:5%">
+                <span class="user-label" >{{ user.id }}</span>
+            </td>
+            <td style="width:15%">
+                <span class="user-label" >{{ user.username }}</span>
+            </td>
+            <td>
+                <span class="user-label" >{{ user.email }}</span>
+            </td>
+            <td>
+                <span class="user-label" >{{ user.first_name }}</span>
+            </td>
+            <td>
+                <span class="user-label" >{{ user.last_name }}</span>
+            </td>
+            <td>
+                <span class="user-label" >{{ user.is_admin }}</span>
+            </td>
+            <td style="width:120px"> 
+                <a onclick="user_edit({{ user.id }})" href="javascript:void(0)">EDIT</a> | 
+                <a onclick="user_delete({{ user.id }},'{{ user.username }}')" href="javascript:void(0)">DELETE</a>
+            </td>
+        </tr>
+	{% endfor %}
+    </tbody>
+    </table><div>
+    <div id="user-edit" class="overlay"></div></center>
+</body>
+</html>
