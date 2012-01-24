@@ -60,7 +60,8 @@ class AdminViewsTestCase(TestCase):
         
     def tearDown(self):
         
-        users = TestUsersAuth.objects.filter(username__contains = 'test_')
+        users = TestUsersAuth.objects.filter(username__startswith = 'test_')
+        users.delete()
         
     def test_index(self):
         """
