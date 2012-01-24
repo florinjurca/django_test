@@ -26,6 +26,127 @@ def get_hexdigest(algorithm, salt, raw_password):
     elif algorithm == 'sha1':
         return sha_constructor(salt + raw_password).hexdigest()
     raise ValueError("Got unknown password algorithm type in password.")
+    
+
+
+class TestUsersAuthManager(models.Manager):
+    '''
+    User manager 
+    
+    == create admin ==
+    
+    admin=True
+    self.create_user(
+        'ioion',
+        '123456',
+        'ioion@cubu.com',
+        'Ion',
+        'Vasile',
+        admin
+    )
+    
+    == create user ==
+    
+    self.create_user(
+        'ioion',
+        '123456',
+        'ioion@cubu.com',
+        'Ion',
+        'Vasile'
+    )
+    '''
+    
+    def create_user(self, data):
+        '''
+        Create an user 
+        '''
+        
+        username    = data.__getitem__('username')
+        password    = data.__getitem__('password')
+        email       = data.__getitem__('email')
+        first_name  = data.__getitem__('first_name')
+        last_name   = data.__getitem__('last_name')
+        
+        is_admin    = data.__getitem__('is_admin') if data.has_key('is_admin') else False
+        
+        
+        #print username,'|',password,'|',email,'|',first_name,'|',last_name,'|',is_admin
+        
+        
+        now = datetime.datetime.now()
+        
+        '''
+        try:
+            email_name, domain_part = email.strip().split('@', 1)
+        except ValueError:
+            pass
+        else:
+            email = '@'.join([email_name, domain_part.lower()])
+        '''
+        
+        
+        user = self.model(
+            username    = username, 
+            email       = email, 
+            first_name  = first_name,
+            last_name   = last_name,
+            is_admin    = is_admin, 
+            cr_date     = now
+        )
+        
+        user.set_password(password)
+        
+        #user.save(using=self._db)
+        user.save()
+        
+    
+    def update_user(self,data):
+        '''
+        Change the user profile
+        '''
+        
+        #print data
+        
+        id          = data.__getitem__('id')
+        #username   = data.__getitem__('username') #the username can't be changed
+        password    = data.__getitem__('password')
+        email       = data.__getitem__('email')
+        first_name  = data.get('first_name','')
+        last_name   = data.get('last_name','')
+        is_admin    = data.get('is_admin',False)
+        
+        
+        #print username,'|',password,'|',email,'|',first_name,'|',last_name,'|',is_admin
+        
+        '''
+        try:
+            email_name, domain_part = email.strip().split('@', 1)
+        except ValueError:
+            pass
+        else:
+            email = '@'.join([email_name, domain_part.lower()])
+        '''
+        
+        
+        user = self.model.objects.get(pk=id)
+        
+        user.email      = email
+        user.first_name = first_name
+        user.last_name  = last_name
+        
+        user.set_password(password)
+        
+        #user.save(using=self._db)
+        user.save()
+        
+    
+    def delete_user(self,data):
+        '''
+        Delete the user
+        '''
+        user = self.model.objects.get(pk=data.__getitem__('id'))
+        user.delete()
+        
 
 
 class TestUsersAuth(models.Model):
@@ -41,8 +162,11 @@ class TestUsersAuth(models.Model):
     is_admin = models.BooleanField('is admin', default=False)
     cr_date = models.DateTimeField('creation date', default=datetime.datetime.now, editable=False)
     
+    #overloading the default manager
+    objects = TestUsersAuthManager()
+    
     def set_password(self, raw_password):
-        if raw_password is None:
+        if raw_password is None: 
             self.set_unusable_password()
         else:
             import random
@@ -50,6 +174,15 @@ class TestUsersAuth(models.Model):
             salt = get_hexdigest(algo, str(random.random()), str(random.random()))[:5]
             hsh = get_hexdigest(algo, salt, raw_password)
             self.password = '%s$%s$%s' % (algo, salt, hsh)
+    
+    def __unicode__(self):
+        return u'%s %s %s %s %s' % (
+            self.username, 
+            self.password, 
+            self.email, 
+            self.first_name, 
+            self.last_name
+        )
     
 
 class TestUsersAuthForm(ModelForm):
@@ -62,6 +195,12 @@ class TestUsersAuthForm(ModelForm):
     
     class Meta:
         model = TestUsersAuth()
+        '''
+        try:
+            model.test_objects.data = super(TestUsersAuthForm, self).data
+        except:
+            model.test_objects.data = {}
+        '''
         
         #fields used only for changing fields order in form
         #fields = ['username','password','password_match','email','first_name','last_name']
@@ -86,54 +225,4 @@ class TestUsersAuthForm(ModelForm):
             raise forms.ValidationError("Passwords didn't match each other!")
             #raise ValidationError(_("Passwords don't match")) #i18n
         return cleaned_data
-    
-
-class TestUsersManager(models.Manager):
-    '''
-    User manager 
-    '''
-    def create_user(self, username, email, password):
-        '''
-        Create an user 
-        '''
-        now = datetime.datetime.now()
-        
-        try:
-            email_name, domain_part = email.strip().split('@', 1)
-        except ValueError:
-            pass
-        else:
-            email = '@'.join([email_name, domain_part.lower()])
-            
-        user = self.model(username=username, email=email, is_admin=False, cr_date=now)
-        
-        user.set_password(password)
-        
-        user.save(using=self._db)
-        
-    
-    def update_user(self,email,password,first_name='',last_name=''):
-        '''
-        Change the user profile
-        '''
-        
-        try:
-            email_name, domain_part = email.strip().split('@', 1)
-        except ValueError:
-            pass
-        else:
-            email = '@'.join([email_name, domain_part.lower()])
-        
-        user = self.model(email=email,first_name=first_name,last_name=last_name)
-        user.set_password(password)
-        user.save(using=self._db)
-        
-    
-    def delete_user(self,username):
-        '''
-        Delete the user
-        '''
-        user = self.model(username=username)
-        user.delete()
-        
     
