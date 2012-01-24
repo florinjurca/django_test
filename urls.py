@@ -20,5 +20,6 @@ urlpatterns = patterns('',
     #url(r'^admin/edit/(?P<id>\d+)/$', 'edit'),
     #url(r'^admin/save/$', 'index'),
     
-    url(r'^admin/', include('admin.urls'))
+    url(r'^admin/', include('admin.urls')),
+    url(r'^exadmin/', include('exadmin.urls')),
 )
