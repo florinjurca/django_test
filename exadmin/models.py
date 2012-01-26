@@ -99,6 +99,8 @@ class TestUsersAuthManager(models.Manager):
         #user.save(using=self._db)
         user.save()
         
+        return user
+        
     
     def update_user(self,data):
         '''
@@ -139,6 +141,8 @@ class TestUsersAuthManager(models.Manager):
         #user.save(using=self._db)
         user.save()
         
+        return user
+        
     
     def delete_user(self,data):
         '''
@@ -155,7 +159,7 @@ class TestUsersAuth(models.Model):
     '''
     id = models.AutoField(primary_key=True, editable=False)
     username = models.CharField('Username', max_length=30, unique=True)
-    password = models.CharField('Password', max_length=16)
+    password = models.CharField('Password', max_length=256)
     first_name = models.CharField('First name', max_length=30, blank=True)
     last_name = models.CharField('Last name', max_length=30, blank=True)
     email = models.EmailField('E-mail address', max_length=60)
@@ -171,12 +175,14 @@ class TestUsersAuth(models.Model):
         else:
             import random
             algo = 'sha1'
-            salt = get_hexdigest(algo, str(random.random()), str(random.random()))[:5]
+            #salt = get_hexdigest(algo, str(random.random()), str(random.random()))[:5]
+            salt = get_hexdigest(algo, 'Florin', 'Jurca')[:5]
             hsh = get_hexdigest(algo, salt, raw_password)
             self.password = '%s$%s$%s' % (algo, salt, hsh)
     
     def __unicode__(self):
-        return u'%s %s %s %s %s' % (
+        return u'%s %s %s %s %s %s' % (
+            self.id,
             self.username, 
             self.password, 
             self.email, 

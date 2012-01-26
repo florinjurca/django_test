@@ -1,6 +1,7 @@
 [
     {
-        "model": "admin.testusersauth",
+        "pk":1,
+        "model": "exadmin.testusersauth",
         "fields": {
             "username": "test_johnsmith_1",
             "first_name": "John_1",
@@ -12,7 +13,8 @@
         }
     },
     {
-        "model": "admin.testusersauth",
+        "pk":2,
+        "model": "exadmin.testusersauth",
         "fields": {
             "username": "test_johnsmith_2",
             "first_name": "John_2",
@@ -24,7 +26,8 @@
         }
     },
     {
-        "model": "admin.testusersauth",
+        "pk":3,
+        "model": "exadmin.testusersauth",
         "fields": {
             "username": "test_johnsmith_3",
             "first_name": "John_3",
