@@ -111,7 +111,7 @@ class ExadminTestCase(TestCase):
     
     def setUp(self):
         """
-        Setup the 
+        Setup the delete_user test
         """
         self.users=[]
         
@@ -168,10 +168,10 @@ class ExadminTestCase(TestCase):
     def test_update_user(self):
         """
         Tests update_user 
-            setup user_data
+            set user_data
             create new user
             user_data_db = fetch the user for id
-            setup new_user_data
+            set new_user_data
             update the user with id
             new_user_data_db = fetch again the same user
             assert new_user_data == new_user_data_db

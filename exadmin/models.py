@@ -31,29 +31,11 @@ def get_hexdigest(algorithm, salt, raw_password):
 
 class TestUsersAuthManager(models.Manager):
     '''
-    User manager 
+    User manager - implementing:
+        create_user
+        update_user
+        delete_user
     
-    == create admin ==
-    
-    admin=True
-    self.create_user(
-        'ioion',
-        '123456',
-        'ioion@cubu.com',
-        'Ion',
-        'Vasile',
-        admin
-    )
-    
-    == create user ==
-    
-    self.create_user(
-        'ioion',
-        '123456',
-        'ioion@cubu.com',
-        'Ion',
-        'Vasile'
-    )
     '''
     
     def create_user(self, data):
