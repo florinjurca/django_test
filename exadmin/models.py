@@ -139,7 +139,7 @@ class TestUsersAuth(models.Model):
     '''
     Test users table
     '''
-    id = models.AutoField(primary_key=True, editable=False)
+    id = models.AutoField(primary_key=True)
     username = models.CharField('Username', max_length=30, unique=True)
     password = models.CharField('Password', max_length=256)
     first_name = models.CharField('First name', max_length=30, blank=True)

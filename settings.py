@@ -146,3 +146,7 @@ LOGGING = {
         },
     }
 }
+
+FIXTURE_DIRS = (
+   '/000_STORAGE/acasa/django_test/fixtures/',
+)

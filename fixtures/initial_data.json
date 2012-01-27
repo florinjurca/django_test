@@ -1,54 +1,106 @@
 [
     {
-        "pk":1,
+        "pk": 1,
         "model": "exadmin.testusersauth",
         "fields": {
-            "username": "test_johnsmith_1",
+            "username": "admin",
+            "first_name": "administrator",
+            "last_name": "reea",
+            "cr_date": "2012-01-27 10:34:13",
+            "is_admin": true,
+            "password": "sha1$dff00$57e99db22c5bb93b48b2d64d22619722ae81c559",
+            "email": "admin@django_test.ro1"
+        }
+    },
+    {
+        "pk": 2,
+        "model": "exadmin.testusersauth",
+        "fields": {
+            "username": "johnsmith_1",
             "first_name": "John_1",
             "last_name": "Smith_1",
-            "cr_date": "2012-01-18 13:32:39",
-            "is_admin": True,
-            "password": "123456",
+            "cr_date": "2012-01-27 10:34:13",
+            "is_admin": false,
+            "password": "sha1$dff00$57e99db22c5bb93b48b2d64d22619722ae81c559",
             "email": "johnsmith1@gmail.com"
         }
     },
     {
-        "pk":2,
+        "pk": 3,
         "model": "exadmin.testusersauth",
         "fields": {
-            "username": "test_johnsmith_2",
+            "username": "johnsmith_2",
             "first_name": "John_2",
             "last_name": "Smith_2",
-            "cr_date": "2012-01-18 13:32:39",
+            "cr_date": "2012-01-27 10:34:13",
             "is_admin": false,
-            "password": "123456",
+            "password": "sha1$dff00$57e99db22c5bb93b48b2d64d22619722ae81c559",
             "email": "johnsmith2@gmail.com"
         }
     },
     {
-        "pk":3,
+        "pk": 4,
         "model": "exadmin.testusersauth",
         "fields": {
-            "username": "test_johnsmith_3",
+            "username": "johnsmith_3",
             "first_name": "John_3",
             "last_name": "Smith_3",
-            "cr_date": "2012-01-18 13:32:39",
+            "cr_date": "2012-01-27 10:34:13",
             "is_admin": false,
-            "password": "123456",
+            "password": "sha1$dff00$57e99db22c5bb93b48b2d64d22619722ae81c559",
             "email": "johnsmith3@gmail.com"
         }
     },
     {
-        "pk":4,
+        "pk": 5,
         "model": "exadmin.testusersauth",
         "fields": {
-            "username": "test_johnsmith_4",
+            "username": "johnsmith_4",
             "first_name": "John_4",
             "last_name": "Smith_4",
-            "cr_date": "2012-01-18 13:32:39",
+            "cr_date": "2012-01-27 10:34:13",
             "is_admin": false,
-            "password": "123456",
+            "password": "sha1$dff00$57e99db22c5bb93b48b2d64d22619722ae81c559",
             "email": "johnsmith4@gmail.com"
+        }
+    },
+    {
+        "pk": 6,
+        "model": "exadmin.testusersauth",
+        "fields": {
+            "username": "johnsmith_5",
+            "first_name": "John_5",
+            "last_name": "Smith_5",
+            "cr_date": "2012-01-27 10:34:13",
+            "is_admin": false,
+            "password": "sha1$dff00$57e99db22c5bb93b48b2d64d22619722ae81c559",
+            "email": "johnsmith5@gmail.com"
+        }
+    },
+    {
+        "pk": 7,
+        "model": "exadmin.testusersauth",
+        "fields": {
+            "username": "johnsmith_6",
+            "first_name": "John_6",
+            "last_name": "Smith_6",
+            "cr_date": "2012-01-27 10:34:13",
+            "is_admin": false,
+            "password": "sha1$dff00$57e99db22c5bb93b48b2d64d22619722ae81c559",
+            "email": "johnsmith6@gmail.com"
+        }
+    },
+    {
+        "pk": 8,
+        "model": "exadmin.testusersauth",
+        "fields": {
+            "username": "johnsmith_7",
+            "first_name": "John_7",
+            "last_name": "Smith_7",
+            "cr_date": "2012-01-27 10:34:13",
+            "is_admin": false,
+            "password": "sha1$dff00$57e99db22c5bb93b48b2d64d22619722ae81c559",
+            "email": "johnsmith7@gmail.com"
         }
     }
 ]
