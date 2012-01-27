@@ -3,12 +3,12 @@
         "pk":1,
         "model": "exadmin.testusersauth",
         "fields": {
-            "username": "test_johnsmith_1",
+            "username": "admin",
             "first_name": "John_1",
             "last_name": "Smith_1",
             "cr_date": "2012-01-18 13:32:39",
-            "is_admin": false,
-            "password": "123456",
+            "is_admin": true,
+            "password": "sha1$dff00$57e99db22c5bb93b48b2d64d22619722ae81c559",
             "email": "johnsmith1@gmail.com"
         }
     },
@@ -21,7 +21,7 @@
             "last_name": "Smith_2",
             "cr_date": "2012-01-18 13:32:39",
             "is_admin": false,
-            "password": "123456",
+            "password": "sha1$dff00$57e99db22c5bb93b48b2d64d22619722ae81c559",
             "email": "johnsmith2@gmail.com"
         }
     },
@@ -30,11 +30,11 @@
         "model": "exadmin.testusersauth",
         "fields": {
             "username": "test_johnsmith_3",
-            "first_name": "John_3",
-            "last_name": "Smith_3",
+            "first_name": "",
+            "last_name": "",
             "cr_date": "2012-01-18 13:32:39",
             "is_admin": false,
-            "password": "123456",
+            "password": "sha1$dff00$57e99db22c5bb93b48b2d64d22619722ae81c559",
             "email": "johnsmith3@gmail.com"
         }
     }
