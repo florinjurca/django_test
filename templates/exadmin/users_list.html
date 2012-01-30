@@ -55,10 +55,14 @@ a {
 </style>
 {% load static %}
 <script type="text/javascript" src="{% get_static_prefix %}js/jquery-1.6.2.min.js"></script>
+
+{% load url from future %}
+{% url 'view_index' as app_base_url %}
+
 <script type="text/javascript">
     user_edit = function(uid)
     {
-        $.get('/exadmin/edit/'+uid+'/',function(data){
+        $.get("{{ app_base_url }}edit/"+uid+'/',function(data){
             $('#user-edit').html(data);
             $('#user-edit').show()
         });
@@ -70,7 +74,7 @@ a {
             $('#user-edit').hide();
         }
         if (!confirm('Delete user:"'+username+'"')) return;
-        location.href='/exadmin/'+uid+'/';
+        location.href='{{ app_base_url }}'+uid+'/';
     };
     
     user_edit_cancel = function() 
@@ -82,10 +86,10 @@ a {
     user_edit_save = function(uid) 
     {
         params = $('#user_edit_form').serializeArray();
-        $.post('/exadmin/edit/'+uid+'/save/',params).complete(function(dat){
+        $.post('{{ app_base_url }}edit/'+uid+'/save/',params).complete(function(dat){
             data = dat.responseText;
             if (data.indexOf('Saved==True')>=0) {
-                location.href='/exadmin/';
+                location.href='{{ app_base_url }}';
                 //alert('Saved==True');
             }
             else 

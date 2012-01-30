@@ -10,8 +10,8 @@ urlpatterns = patterns('exadmin.views',
     #url(r'^edit/(?P<id>\d+)/(?P<save>save)/$', 'edit'),
     
     
-    url(r'^$', 'index_1'),
-    url(r'^(?P<id>\d+)/$', 'delete_1'),
-    url(r'^edit/(?P<id>\d+)/$', 'edit_1'),
-    url(r'^edit/(?P<id>\d+)/(?P<save>save)/$', 'edit_1'),
+    url(r'^$', 'index_1',name='view_index'),
+    url(r'^(?P<id>\d+)/$', 'delete_1',name='view_delete'),
+    url(r'^edit/(?P<id>\d+)/$', 'edit_1',name='view_edit'),
+    url(r'^edit/(?P<id>\d+)/(?P<save>save)/$', 'edit_1',name='view_save'),
 )

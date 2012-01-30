@@ -272,7 +272,8 @@ class ExadminTestCase(TestCase):
     
     def test_password_hash_user(self):
         """
-        Test 
+        Tests hashing password using a withness algorithm
+            simple tests: len and match
         """
         user = self.users[0]
         
