@@ -191,7 +191,8 @@ class TestUsersAuthForm(ModelForm):
         '''
         
         #fields used only for changing fields order in form
-        #fields = ['username','password','password_match','email','first_name','last_name']
+        fields = ['username','password','password_match','email','first_name','last_name']
+        exclude = ['is_admin']
         
         widgets = {
             'password': forms.PasswordInput()
